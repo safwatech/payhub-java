@@ -1,0 +1,13 @@
+# JitPack build config for the Java SDK.
+#
+# JitPack runs `mvn install` and then re-serves the artifacts under
+# com.github.safwatech:payhub-java:<version>. Skip unit tests because
+# they read shared test-vector fixtures from a path that resolves in
+# the upstream monorepo (sdks/java/../shared/test-vectors) but not on
+# a JitPack-cloned checkout where the SDK is the repo root. Mirror CI
+# enforces the same tests on every release before the tag is cut.
+jdk:
+  - openjdk17
+
+install:
+  - mvn install -B -ntp -DskipTests

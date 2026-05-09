@@ -5,46 +5,27 @@ dependency, sealed `NextAction`, typed `ApiException` hierarchy, and a
 webhook verifier that throws on every failure mode so callers can't
 forget the unhappy path.
 
-## Install (JitPack — available today)
+## Install
 
-Add the JitPack repository, then depend on the package:
+Maven:
 
 ```xml
-<repositories>
-  <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
-  </repository>
-</repositories>
-
 <dependency>
-  <groupId>com.github.safwatech</groupId>
-  <artifactId>payhub-java</artifactId>
-  <version>v1.0.1</version>
+  <groupId>ly.payhub</groupId>
+  <artifactId>payhub</artifactId>
+  <version>1.0.0</version>
 </dependency>
 ```
 
-Or with Gradle:
+Gradle:
 
 ```kotlin
-// settings.gradle.kts
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
-    }
-}
-
-// app/build.gradle.kts
 dependencies {
-    implementation("com.github.safwatech:payhub-java:v1.0.1")
+    implementation("ly.payhub:payhub:1.0.0")
 }
 ```
 
-> **Maven Central note** — `ly.payhub:payhub:1.0.0` coordinates are
-> reserved and will be activated once the Sonatype Central Portal
-> setup completes. JitPack is the recommended install today; the API
-> surface is identical.
+On Maven Central; sources + javadoc + GPG signatures attached.
 
 > **PayHub API:** v1 · **JDK:** ≥ 17 · **License:** MIT
 

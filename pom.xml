@@ -10,15 +10,38 @@
     <packaging>jar</packaging>
 
     <name>PayHub Java SDK</name>
-    <description>Official PayHub SDK for Java.</description>
+    <description>Official PayHub SDK for Java — Sadad, Moamalat, Mobicash, T-Lync, Adfali behind one API.</description>
     <url>https://payhub.ly</url>
 
     <licenses>
         <license>
-            <name>MIT</name>
+            <name>MIT License</name>
             <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <developers>
+        <developer>
+            <id>safwatech</id>
+            <name>Safwa Tech</name>
+            <email>info@payhub.ly</email>
+            <organization>Safwa Tech</organization>
+            <organizationUrl>https://payhub.ly</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/safwatech/payhub-java.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/safwatech/payhub-java.git</developerConnection>
+        <url>https://github.com/safwatech/payhub-java</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/safwatech/payhub-java/issues</url>
+    </issueManagement>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -51,4 +74,78 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!--
+          The 'release' profile is what mirror CI activates on a tag
+          publish: it builds source + javadoc jars, signs every artifact
+          with GPG, and uploads the deployment bundle to Sonatype's new
+          Central Publisher Portal. autoPublish=true means the bundle
+          auto-releases once Sonatype validation passes; set to false if
+          you want to inspect the staged deployment before clicking
+          Publish in https://central.sonatype.com.
+        -->
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals><goal>jar-no-fork</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.7.0</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals><goal>jar</goal></goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <doclint>none</doclint>
+                            <source>17</source>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.2.4</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals><goal>sign</goal></goals>
+                                <configuration>
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.6.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <autoPublish>true</autoPublish>
+                            <waitUntil>published</waitUntil>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
